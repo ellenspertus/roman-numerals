@@ -26,12 +26,12 @@ to exclude the `doc` directory and its subdirectories.
 
 ### Create and checkout the branch
 
-You should create the branch and check it out separately:
+You can create the branch and check it out separately:
 ```
-git branch doc       # Create branch.
-git checkout doc     # Check out branch.
+git branch setup       # Create branch.
+git checkout setup     # Check out branch.
 ```
-I prefer to do them at the same time, because (1) I'm lazy and (2) I don't risk forgetting to check out the branch.
+I prefer to do them at the same time, because (1) I'm lazy and (2) I don't risk forgetting to check out the branch after creating it.
 ```
 git checkout -b doc  # Create and check out branch.
 ```
@@ -46,8 +46,6 @@ git diff
 
 ### Add files to the staging area
 
-You probably don't want do add files to the staging area one at a time, since there are so many. 
-
 The following three commands all do the same thing, if done in the root (top) directory of your repo (which is where you should generally be in your terminal window):
 ```
 git add .          # Stage all added, changed, or modified files in this directory or its subdirectories.
@@ -55,15 +53,15 @@ git add --all      # Stage all added, changed, or modified files in the repo.
 git add -A         # Stage all added, changed, or modified files in the repo.
 ```
 
-If you wanted to stage only the files in the `doc` directory, you could do:
+If you wanted to stage only the files in the `src` directory, you could do:
 ```
-cd doc             # Change the current directory to the doc subdirectory.
+cd src             # Change the current directory to the src subdirectory.
 git add .          # Add all files in this directory or its subdirectories.
 cd ..              # Change the current directory back to the parent directory.
 ```
 or:
 ```
-git add doc        # Add all files in the doc directory or its subdirectories.
+git add src        # Add all files in the src directory or its subdirectories.
 ```
 I prefer the latter because (1) I'm lazy and (2) I don't forget to `cd` back to the root directory.
 
@@ -88,8 +86,13 @@ git push
 ```
 This will suggest the correct command, which is:
 ```
-git push --set-upstream origin doc
+git push --set-upstream origin setup
 ```
+There is a shorter version:
+```
+git push -u origin setup
+```
+
 You can see your repo's remotes with the command:
 ```
 git remote             # Show the names of the remotes.
