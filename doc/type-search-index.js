@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"edu.mills.cs180a","l":"RomanNumeral"},{"p":"edu.mills.cs180a","l":"VisibleForTesting"}]
