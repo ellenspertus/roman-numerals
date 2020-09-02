@@ -1,4 +1,4 @@
-# RomanNumeral
+# roman-numerals
 
 The purposes of this assignment are:
 * building up your skills with the tools we are using this semester
