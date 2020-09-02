@@ -22,7 +22,7 @@ Open and edit the `.gitignore` file in the root directory of the repo. Add this 
 ```
 doc/
 ```
-to exclude the `doc` directory and its subdirectories.
+to exclude the `doc` directory and its subdirectories. Make sure to press `Enter` at the end of the line. It's a [good practice to end files with a newline character (empty line)](https://unix.stackexchange.com/questions/18743/whats-the-point-in-adding-a-new-line-to-the-end-of-a-file).
 
 ### Create and checkout the branch
 
@@ -33,7 +33,7 @@ git checkout setup     # Check out branch.
 ```
 I prefer to do them at the same time, because (1) I'm lazy and (2) I don't risk forgetting to check out the branch after creating it.
 ```
-git checkout -b doc  # Create and check out branch.
+git checkout -b setup  # Create and check out branch.
 ```
 
 ### See what files have changed
