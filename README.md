@@ -4,6 +4,7 @@ The purposes of this assignment are:
 * building up your skills with the tools we are using this semester, including git, GitHub, JUnit, and Eclipse
 * letting you practice test-driven development
 * giving you a challenging small project that introduces some interesting issues we will explore in class
+Keep track of how long you spend on each part.
 
 ## Part 0. Setup (30 minutes)
 
