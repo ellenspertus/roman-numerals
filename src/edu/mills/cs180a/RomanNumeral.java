@@ -19,7 +19,8 @@ public class RomanNumeral {
 	 */
 	public static final int MAX_VALUE = 9999;
 
-	private static final Map<Character, Integer> LETTERS_TO_VALUES = Map.of(
+	@VisibleForTesting
+	protected static final Map<Character, Integer> LETTERS_TO_VALUES = Map.of(
 		'I', 1,
 		'V', 5,
 		'X', 10,
@@ -81,7 +82,10 @@ public class RomanNumeral {
 	}
 	
 	@VisibleForTesting
-	protected int convertFromString(String s) {
+	protected static int convertFromString(String s) {
+		if (s.isEmpty()) {
+			throw new IllegalArgumentException("The empty string is not a valid Roman Numeral");
+		}
 		int[] values = new int[s.length()];
 		for (int i = 0; i < s.length(); i++) {
 			char c = Character.toUpperCase(s.charAt(i));
@@ -93,10 +97,10 @@ public class RomanNumeral {
 		}
 		int total = 0;
 		for (int i = 0; i < values.length; i++) {
-			if (i + 1 < values.length && values[i] > values[i + 1]) {
-				total += values[i];
-			} else {
+			if (i + 1 < values.length && values[i] < values[i + 1]) {
 				total -= values[i];
+			} else {
+				total += values[i];
 			}
 		}
 		return total;
