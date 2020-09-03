@@ -44,7 +44,7 @@ git status
 git diff
 ```
 
-### Add files to the staging area
+### Add .gitignore to the staging area
 
 The following three commands all do the same thing, if done in the root (top) directory of your repo (which is where you should generally be in your terminal window):
 ```
@@ -53,24 +53,17 @@ git add --all      # Stage all added, changed, or modified files in the repo.
 git add -A         # Stage all added, changed, or modified files in the repo.
 ```
 
-If you wanted to stage only the files in the `src` directory, you could do:
+Since we're adding only one file, we can easily specify it by name:
 ```
-cd src             # Change the current directory to the src subdirectory.
-git add .          # Add all files in this directory or its subdirectories.
-cd ..              # Change the current directory back to the parent directory.
+git add .gitignore
 ```
-or:
-```
-git add src        # Add all files in the src directory or its subdirectories.
-```
-I prefer the latter because (1) I'm lazy and (2) I don't forget to `cd` back to the root directory.
 
 ### Commit your changes
 To commit your changes (move them from the staging area to the local permanent record), do:
 ```
 git commit
 ```
-This will open an editor and prompt you to write a commit message. It will also show you what changes will be committed. If all looks good, type the commit message, then save and exit the editor. If you want to cancel the commit, type ^C (control-c) or ^Z (control-z).
+This will open an editor and prompt you to write a commit message. It will also show you what changes will be committed. If all looks good, type the commit message, then save and exit the editor. If you want to cancel the commit, you can do so in most editors by typing ^C (control-c) or ^Z (control-z) and by declining the offer to save changes to the file, if offered.
 
 If you prefer, you can specify the commit message on the command line:
 ```
@@ -101,7 +94,30 @@ or:
 ```
 git remote -v          # Show the names and URLs of the remotes.
 ```
-In general, the command-line argument "-v", which stands for "verbose", gives more detailed information. Try using it with other commands, such as `git status`.
+In general, the command-line argument "-v", which stands for "verbose", gives more detailed information for different commands.
 
 ### Create a pull request
 
+Please put comments about any problems you encountered in the commit request.
+
+## Part 1. Create unit tests
+
+Create a new branch named `tests` for creating JUnit5 unit tests. 
+
+Write unit tests for the methods `convertFromString()` and `convertToText()`, providing both valid and invalid arguments, in which case you will need to check for exceptions. You should use parameterized tests. I encourage you to make use of (and add) links on the Canvas site.
+
+You can choose how often to commit and push changes to your repository.
+
+When you are done, make a pull request from your `tests` branch to your `main` branch, assigned to me.
+
+## Part 2: Implement the methods
+
+Your job is to implement `convertFromString()` and `convertToText()`. I recognize that those of you who are less experienced may not be able to complete this task by Thursday, September 10, and you are not expected to make a heroic effort to do so. (You should be spending 8-10 hours/week outside of classtime.) 
+
+If you can't implement everything in this time, you may:
+* Implement only one of the two methods.
+* Reduce `MAX_VALUE` (for example, only accept numbers up to 99, instead of 9999).
+
+You should create at least one new branch for this work. (If you want to try multiple approaches, you might choose to use multiple branches.) Working with classmates is encouraged, and a pair of students may turn in a single assignment if they do all of the work together. Contact me to discuss logistics.
+
+You must submit your work to me by noon, Thursday, Spetember 10. The way to submit it is by making a pull request from your implementation branch to your main branch and assigning it to me.
