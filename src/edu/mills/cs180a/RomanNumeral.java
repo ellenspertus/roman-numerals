@@ -83,90 +83,11 @@ public class RomanNumeral {
 	
 	@VisibleForTesting
 	protected static int convertFromString(String s) {
-		if (s.isEmpty()) {
-			throw new IllegalArgumentException("The empty string is not a valid Roman Numeral");
-		}
-		int[] values = new int[s.length()];
-		for (int i = 0; i < s.length(); i++) {
-			char c = Character.toUpperCase(s.charAt(i));
-			if (LETTERS_TO_VALUES.containsKey(c)) {
-				values[i] = LETTERS_TO_VALUES.get(c);
-			} else {
-				throw new IllegalArgumentException("Not a valid Roman Numeral: " + s.charAt(i));
-			}
-		}
-		int total = 0;
-		for (int i = 0; i < values.length; i++) {
-			if (i + 1 < values.length && values[i] < values[i + 1]) {
-				total -= values[i];
-			} else {
-				total += values[i];
-			}
-		}
-		return total;
+		return 0;
 	}
 	
 	@VisibleForTesting
 	protected static String convertToText(int n) {
-		StringBuilder sb = new StringBuilder();
-		if (n >= 1000) {
-			int thousands = n / 1000; // rounds down
-			while (thousands-- > 0) {
-				sb.append("M");
-			}
-			n %= 1000;
-		}
-		if (n >= 500) {
-			sb.append("D");
-			n -= 500;
-		}
-		if (n >= 400) {
-			sb.append("CD");
-			n -= 400;
-		}
-		if (n >= 100) {
-			int hundreds = n / 100;
-			while (hundreds-- > 0) {
-				sb.append("C");
-			}
-			n %= 100;
-		}
-		if (n >= 90) {
-			sb.append("XC");
-			n -= 90;
-		}
-		if (n >= 50) {
-			sb.append("L");
-			n -= 50;
-		}
-		if (n >= 40) {
-			sb.append("XL");
-			n -= 40;
-		}
-		if (n >= 10) {
-			int tens = n / 10;
-			while (tens-- > 0) {
-				sb.append("X");
-			}
-			n %= 10;
-		}
-		if (n >= 9) {
-			sb.append("IX");
-			n -= 9;
-		}
-		if (n >= 5) {
-			sb.append("V");
-			n -= 5;
-		}
-		if (n >= 4) {
-			sb.append("IV");
-			n -= 4;
-		}
-		if (n >= 1) {
-			while (n > 0) {
-				sb.append("I");
-			}
-		}
-		return sb.toString();
+		return null;
 	}
 }
