@@ -42,7 +42,7 @@ public class RomanNumeral {
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
     }
     this.value = value;
-    text = convertToText(value);
+    text = convertFromInt(value);
   }
 
   /**
@@ -77,28 +77,31 @@ public class RomanNumeral {
 
   @VisibleForTesting
   protected static int convertFromString(String s) {
+    s = s.toUpperCase();
     if (s.isEmpty()) {
       throw new IllegalArgumentException("The empty string is not a valid Roman Numeral");
     }
-    String text = s.toUpperCase();
+
     int total = 0;
-    String highestSubstringSeen; // highest valued symbol or subtractive form
+    String highestSubstringSeen = null; // highest valued symbol or subtractive form
     int highestValueSeen = 0; // value of highestSubstringSeen
-    for (int i = 0; i < text.length(); i++) {
-      Integer currentValue;
-      String currentSubstring; // subtractive form or individual symbol starting at index i
+
+    for (int i = 0; i < s.length(); i++) {
+      Integer currentValue = null;
+      String currentSubstring = null; // subtractive form or individual symbol starting at index i
 
       // Check if this character starts a subtractive form.
-      if (i + 1 < text.length()) {
-        currentSubstring = text.substring(i, i + 2);
-        if (SUBTRACTIVE_FORMS.containsKey(bigraph)) {
-          currentValue = SUBTRACTIVE_FORMS.get(bigraph);
+      if (i + 1 < s.length()) {
+        currentSubstring = s.substring(i, i + 2);
+        if (SUBTRACTIVE_FORMS.containsKey(currentSubstring)) {
+          currentValue = SUBTRACTIVE_FORMS.get(currentSubstring);
+          i++; // Skip next character, which is part of the current substring.
         }
       }
 
       // If it wasn't a subtractive form, look up its value.
       if (currentValue == null) {
-        char currentChar = text.charAt(i);
+        char currentChar = s.charAt(i);
         currentValue = LETTERS_TO_VALUES.get(currentChar);
         currentSubstring = Character.toString(currentChar);
       }
@@ -111,6 +114,7 @@ public class RomanNumeral {
 
       // Keep track of highest substring seen, which should always be the first.
       if (highestSubstringSeen == null) {
+        // Initialize on first iteration.
         highestSubstringSeen = currentSubstring;
         highestValueSeen = currentValue;
       } else {
@@ -128,14 +132,15 @@ public class RomanNumeral {
   }
 
   @VisibleForTesting
-  protected static String convertToText(int n) {
+  protected static String convertFromInt(int n) {
     StringBuilder sb = new StringBuilder();
-    if (n >= 1000) {
-      int thousands = n / 1000; // rounds down
-      while (thousands-- > 0) {
-        sb.append("M");
-      }
-      n %= 1000;
+    while (n >= 1000) {
+      sb.append("M");
+      n -= 1000;
+    }
+    if (n >= 900) {
+      sb.append("CM");
+      n -= 900;
     }
     if (n >= 500) {
       sb.append("D");
@@ -145,12 +150,9 @@ public class RomanNumeral {
       sb.append("CD");
       n -= 400;
     }
-    if (n >= 100) {
-      int hundreds = n / 100;
-      while (hundreds-- > 0) {
-        sb.append("C");
-      }
-      n %= 100;
+    while (n >= 100) {
+      sb.append("C");
+      n -= 100;
     }
     if (n >= 90) {
       sb.append("XC");
@@ -164,12 +166,9 @@ public class RomanNumeral {
       sb.append("XL");
       n -= 40;
     }
-    if (n >= 10) {
-      int tens = n / 10;
-      while (tens-- > 0) {
-        sb.append("X");
-      }
-      n %= 10;
+    while (n >= 10) {
+      sb.append("X");
+      n -= 10;
     }
     if (n >= 9) {
       sb.append("IX");
@@ -183,10 +182,9 @@ public class RomanNumeral {
       sb.append("IV");
       n -= 4;
     }
-    if (n >= 1) {
-      while (n > 0) {
-        sb.append("I");
-      }
+    while (n > 0) {
+      sb.append("I");
+      n--;
     }
     return sb.toString();
   }
