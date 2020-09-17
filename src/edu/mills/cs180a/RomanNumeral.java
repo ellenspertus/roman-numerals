@@ -134,10 +134,12 @@ public class RomanNumeral {
   @VisibleForTesting
   protected static String convertFromInt(int n) {
     StringBuilder sb = new StringBuilder();
+
     while (n >= 1000) {
       sb.append("M");
       n -= 1000;
     }
+
     if (n >= 900) {
       sb.append("CM");
       n -= 900;
