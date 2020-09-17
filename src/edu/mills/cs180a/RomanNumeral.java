@@ -75,6 +75,14 @@ public class RomanNumeral {
     return text;
   }
 
+  /**
+   * Returns the number corresponding to the given string representing a Roman Numeral.
+   *
+   * @param s the Roman Numeral
+   * @return the corresponding number
+   * @throws IllegalArgumentException if the argument is not a valid Roman Numeral or if it is out
+   *         of range
+   */
   @VisibleForTesting
   protected static int convertFromString(String s) {
     s = s.toUpperCase();
@@ -128,11 +136,28 @@ public class RomanNumeral {
 
       total += currentValue;
     }
+    if (total > MAX_VALUE || total < MIN_VALUE) {
+      throw new IllegalArgumentException(
+          "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + total);
+    }
     return total;
   }
 
+  /**
+   * Returns the Roman Numeral representation of the given number.
+   *
+   * @param n the number to convert
+   * @return the Roman Numeral representation
+   * @throws IllegalArgumentException if the number cannot be represented by a Roman Numeral in the
+   *         given range
+   */
   @VisibleForTesting
-  protected static String convertFromInt(int n) {
+  protected static String convertFromInt(int n) throws IllegalArgumentException {
+    if (n > MAX_VALUE || n < MIN_VALUE) {
+      throw new IllegalArgumentException(
+          "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + n);
+    }
+
     StringBuilder sb = new StringBuilder();
 
     while (n >= 1000) {
