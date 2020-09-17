@@ -69,6 +69,11 @@ public class RomanNumeral {
     return false;
   }
 
+  @Override
+  public int hashCode() {
+    return 42;
+  }
+
   /**
    * Returns the numeric value of this {@code RomanNumeral}.
    *

@@ -1,33 +1,42 @@
 package edu.mills.cs180a;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class RomanNumeralTest {
-  private static RomanNumeral rnX;
+  private static RomanNumeral rnX1;
+  private static RomanNumeral rnX2;
 
   @BeforeAll
   static void setup() {
-    rnX = new RomanNumeral("X");
+    rnX1 = new RomanNumeral("X");
+    rnX2 = new RomanNumeral("X");
   }
 
   @Test
   void equals_True_Reflexive() {
-    assertEquals(rnX, rnX);
+    assertEquals(rnX1, rnX1);
   }
 
   @Test
   void equals_True_EqualRomanNumerals() {
-    RomanNumeral rn = new RomanNumeral("X");
-    assertEquals(rn, rnX);
+    assertEquals(rnX1, rnX2);
+  }
+
+  @Test
+  void size_1_TwoEqualRNs() {
+    Set<RomanNumeral> nums = new HashSet<>();
+    nums.add(rnX1);
+    nums.add(rnX2);
+    assertEquals(1, nums.size());
   }
 
   @Test
   void equals_True_EqualInteger() {
-    RomanNumeral rn1 = new RomanNumeral("X");
-    Integer i = 10;
-    assertEquals(rn1, rn2);
+    assertEquals(rnX1, 10);
   }
 
   /*
