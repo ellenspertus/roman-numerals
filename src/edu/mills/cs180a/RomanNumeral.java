@@ -68,6 +68,11 @@ public class RomanNumeral {
     return text;
   }
 
+  @Override
+  public boolean equals(Object other) {
+    return other instanceof RomanNumeral && value == ((RomanNumeral) other).value;
+  }
+
   /**
    * Returns the number corresponding to the given string representing a Roman Numeral.
    *
