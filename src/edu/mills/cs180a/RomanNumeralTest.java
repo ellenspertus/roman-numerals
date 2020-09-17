@@ -2,6 +2,7 @@ package edu.mills.cs180a;
 
 import static edu.mills.cs180a.RomanNumeral.convertFromInt;
 import static edu.mills.cs180a.RomanNumeral.convertFromString;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -518,5 +519,64 @@ class RomanNumeralTest {
   void convertFromInt_StringOutput_ValidIntInput_Sarah(int input, String expected) {
     String actual = convertFromInt(input);
     assertEquals(expected, actual);
+  }
+
+  @Test
+  void RomanNumeral_ThrowsIllegalArgumentException_StringInputTooHigh_Zoe() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      new RomanNumeral("T");
+    });
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"I")
+  void RomanNumeral_DoesNotThrowException_StringInputInBounds_Zoe(String string) {
+      assertDoesNotThrow(
+              () -> {new RomanNumeral(string);
+              });
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {RomanNumeral.MIN_VALUE, RomanNumeral.MAX_VALUE})
+  void RomanNumeral_DoesNotThrowException_IntInputInBounds_Zoe(int number) {
+    assertDoesNotThrow(() -> {
+      new RomanNumeral(number);
+    });
+  }
+
+  @Test
+  void getValue_ReturnsCorrectNumericValue_RomanNumeral_Zoe() {
+    assertEquals(new RomanNumeral("V").getValue(), 5);
+    assertEquals(new RomanNumeral(5).getValue(), 5);
+  }
+
+  @Test
+  void toString_ReturnsCorrectStringValue_RomanNumeral_Zoe() {
+    assertEquals(new RomanNumeral(5).toString(), "V");
+    assertEquals(new RomanNumeral("V").toString(), "V");
+  }
+
+  @Test
+  void convertFromInt_ReturnsCorrectIntToStringConversion_ValidIntInput_Zoe() {
+    assertEquals(RomanNumeral.convertFromInt(5), "V");
+  }
+
+  @ParameterizedTest
+  @CsvSource({"5,V", "10,X", "6,VI", "58,LVIII", "101,CI", "842,DCCCXLII"})
+  void convertFromInt_ReturnsCorrectIntToStringConversion_ValidCsvIntInputsLessThan1000_Zoe(
+      int input, String actual) {
+    assertEquals(actual, RomanNumeral.convertFromInt(input));
+  }
+
+  @ParameterizedTest
+  @CsvSource({"1994,MCMXCIV", "3549,MMMDXLIX", "1200,MCC", "2000,MM", "3289,MMMCCLXXXIX"})
+  void convertFromInt_ReturnsCorrectIntToStringConversion_ValidCsvIntInputs1000To4000_Zoe(int input,
+      String actual) {
+    assertEquals(actual, RomanNumeral.convertFromInt(input));
+  }
+
+  @Test
+  void convertFromString_ReturnsCorrectIntValue_ValidStringInput_Zoe() {
+    assertEquals(RomanNumeral.convertFromString("V"), 5);
   }
 }
