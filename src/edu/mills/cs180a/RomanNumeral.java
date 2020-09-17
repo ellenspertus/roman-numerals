@@ -61,6 +61,14 @@ public class RomanNumeral {
     }
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (other instanceof RomanNumeral) {
+      return value == ((RomanNumeral) other).value;
+    }
+    return false;
+  }
+
   /**
    * Returns the numeric value of this {@code RomanNumeral}.
    *
