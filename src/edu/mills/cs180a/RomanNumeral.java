@@ -36,11 +36,7 @@ public class RomanNumeral {
    * @param value the value to be represented
    * @throws IllegalArgumentException if the argument is out of bounds
    */
-  public RomanNumeral(int value) {
-    if (value < MIN_VALUE || value > MAX_VALUE) {
-      throw new IllegalArgumentException(
-          "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
-    }
+  public RomanNumeral(int value) throws IllegalArgumentException {
     this.value = value;
     text = convertFromInt(value);
   }
@@ -52,14 +48,11 @@ public class RomanNumeral {
    * @param text the Roman Numeral
    * @throws IllegalArgumentException if the argument is out of bounds
    */
-  public RomanNumeral(String text) {
+  public RomanNumeral(String text) throws IllegalArgumentException {
     this.text = text;
     value = convertFromString(text);
-    if (value < MIN_VALUE || value > MAX_VALUE) {
-      throw new IllegalArgumentException(
-          "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
-    }
   }
+
 
   /**
    * Returns the numeric value of this {@code RomanNumeral}.
