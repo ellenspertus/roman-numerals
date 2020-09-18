@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -308,9 +309,10 @@ class RomanNumeralTest {
 
   @Test
   void testConvertFromStringExceptionTest_Null_Maki() {
-    assertThrows(IllegalArgumentException.class, () -> {
+    Exception e = assertThrows(Exception.class, () -> {
       convertFromString(null);
     });
+    assertTrue(e instanceof NullPointerException || e instanceof IllegalArgumentException);
   }
 
   // inValid data (inValid alphabet & character)
