@@ -92,8 +92,8 @@ public class RomanNumeral {
     }
 
     int total = 0;
-    String highestSubstringSeen = null; // highest valued symbol or subtractive form
-    int highestValueSeen = 0; // value of highestSubstringSeen
+    String previousSubstring = null;
+    int previousValue = 0;
 
     for (int i = 0; i < s.length(); i++) {
       Integer currentValue = null;
@@ -121,18 +121,17 @@ public class RomanNumeral {
         throw new IllegalArgumentException("Not a valid Roman Numeral: " + currentSubstring);
       }
 
-      // Keep track of highest substring seen, which should always be the first.
-      if (highestSubstringSeen == null) {
-        // Initialize on first iteration.
-        highestSubstringSeen = currentSubstring;
-        highestValueSeen = currentValue;
+      // Make sure current value is not greater than previous value,
+      // which would indicate an invalid input string.
+      if (previousSubstring == null || currentValue <= previousValue) {
+        // Update values.
+        previousSubstring = currentSubstring;
+        previousValue = currentValue;
       } else {
-        // Make sure current substring is no higher than earlier substrings.
-        if (currentValue > highestValueSeen) {
-          throw new IllegalArgumentException(s + " is not a valid Roman Numeral because substring "
-              + currentSubstring + " has a higher value (" + currentValue
-              + ") than earlier substring " + highestSubstringSeen + " (" + highestValueSeen + ")");
-        }
+        // Current value is greater than last value.
+        throw new IllegalArgumentException(s + " is not a valid Roman Numeral because substring "
+            + currentSubstring + " has a higher value (" + currentValue
+            + ") than earlier substring " + previousSubstring + " (" + previousValue + ")");
       }
 
       total += currentValue;
