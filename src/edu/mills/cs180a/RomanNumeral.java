@@ -47,7 +47,8 @@ public class RomanNumeral {
 
   /**
    * Constructs a newly-allocated {@code RomanNumeral} object for the specified text. The argument
-   * must be in the range {@link #MIN_VALUE} to {@link #MAX_VALUE}, inclusive.
+   * must be in the range {@link #MIN_VALUE} to {@link #MAX_VALUE}, inclusive. The only subtractive
+   * forms that are accepted are "IV", "IX", "XL", "XC", "CD", and "DM".
    *
    * @param text the Roman Numeral
    * @throws IllegalArgumentException if the argument is out of bounds
