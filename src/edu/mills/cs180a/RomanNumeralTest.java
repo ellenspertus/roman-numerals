@@ -29,40 +29,35 @@ class RomanNumeralTest {
   }
 
   @Test
-  public void equals_IsReflexive_BHamrick() {
+  public void equals_True_Reflexive() {
     assertTrue(rnX.equals(rnX));
   }
 
-  public void equals_IsTransitive_BHamrick() {
+  public void equals_True_Transitive() {
     RomanNumeral x = new RomanNumeral("IV");
     RomanNumeral y = new RomanNumeral("IV");
     RomanNumeral z = new RomanNumeral("IV");
 
-    assertTrue(x.equals(y) | y.equals(z) | x.equals(z));
+    assertTrue(x.equals(y) && y.equals(z) && x.equals(z));
   }
 
   @Test
-  public void equals_IsSymmetric_BHamrick() {
+  public void equals_True_Symmetric() {
     RomanNumeral x = new RomanNumeral("IV");
     RomanNumeral y = new RomanNumeral("IV");
 
-    assertTrue(x.equals(y) | y.equals(x));
+    assertTrue(x.equals(y) && y.equals(x));
   }
 
   @Test
-  public void equals_IsStableOverTime_BHamrick() {
+  public void equals_True_StableOverTime() {
     RomanNumeral x = new RomanNumeral("X");
     assertTrue(x.equals(rnX));
-    try {
-      Thread.sleep(1000);
-      assertTrue(x.equals(rnX));
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    assertTrue(x.equals(rnX));
   }
 
   @Test
-  public void equals_IsNotNull_Bhamrick() {
+  public void equals_False_Null() {
     RomanNumeral x = new RomanNumeral("IV");
     assertFalse(x.equals(null));
   }
