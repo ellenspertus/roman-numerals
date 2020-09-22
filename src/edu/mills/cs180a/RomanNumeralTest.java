@@ -25,4 +25,11 @@ class RomanNumeralTest {
     Integer i = Integer.valueOf(10);
     assertNotEquals(rnX, i);
   }
+
+  @Test
+  public void equals_True_Symmetric_X_VV() {
+    RomanNumeral rn2 = new RomanNumeral("VV");
+    assertEquals(rnX, rn2);
+  }
+
 }
