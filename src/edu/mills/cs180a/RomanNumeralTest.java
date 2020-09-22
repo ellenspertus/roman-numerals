@@ -17,6 +17,7 @@ class RomanNumeralTest {
   public void equals_True_XX() {
     RomanNumeral rn2 = new RomanNumeral("X");
     assertEquals(rnX, rn2);
+    assertEquals(rn2, rnX); // test symmetry
   }
 
   @Test
@@ -34,6 +35,15 @@ class RomanNumeralTest {
   @Test
   public void equals_False_null() {
     assertNotEquals(rnX, null);
+  }
+
+  @Test
+  public void equals_True_TransitiveXXX() {
+    RomanNumeral rn2 = new RomanNumeral("X");
+    RomanNumeral rn3 = new RomanNumeral("X");
+    assertEquals(rnX, rn2);
+    assertEquals(rn2, rn3);
+    assertEquals(rnX, rn3);
   }
 
 }
