@@ -46,4 +46,7 @@ class RomanNumeralTest {
     assertEquals(rnX, rn3);
   }
 
+  public void equals_True_Reflexive() {
+    assertEquals(rnX, rnX);
+  }
 }
