@@ -32,7 +32,7 @@ class RomanNumeralTest {
 
   // inValid combination data
   @ParameterizedTest
-  @ValueSource(strings = {"DM", "DD", "LM"})
+  @ValueSource(strings = {"DM", "LM"})
 
   void testConvertFromStringExceptionTest_Makie(String strings) {
     assertThrows(IllegalArgumentException.class, () -> {
