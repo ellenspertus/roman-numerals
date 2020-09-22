@@ -1,7 +1,6 @@
 package edu.mills.cs180a;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -31,26 +30,10 @@ class RomanNumeralTest {
     assertNotEquals(rnX, i);
   }
 
-  @Test
-  public void equals_True_XV_15() {
-    Integer i = Integer.valueOf(15);
-    assertTrue(i.equals(RomanNumeral.convertFromString("XV")));
-  }
-
-  @Test
-  public void equals_False_XV_10() {
-    Integer i = Integer.valueOf(10);
-    assertFalse(i.equals(RomanNumeral.convertFromString("XX")));
-  }
-
-  @Test
-  public void equals_True_CI_101() {
-    Integer i = Integer.valueOf(101);
-    assertTrue(i.equals(RomanNumeral.convertFromString("CI")));
-  }
-
   @ParameterizedTest
   @CsvSource({
+    "CI, 101",
+    "XV, 15",
     "V, 5",
     "VI, 6",
     "DCLXVI, 666",
@@ -73,8 +56,9 @@ class RomanNumeralTest {
     "DCC, 700",
     "DCCC, 800"
   })
-  void convertFromStringReturnsCorrectInt(String input, Integer expected) {
-    int actual = RomanNumeral.convertFromString(input);
-    assertTrue(expected.equals(actual));
+  void convertFromStringReturnsCorrectInt(String input, int expected) {
+    Integer expectedInteger = Integer.valueOf(expected);
+    Integer actual = Integer.valueOf(RomanNumeral.convertFromString(input));
+    assertTrue(expectedInteger.equals(actual));
   }
 }
