@@ -1,9 +1,13 @@
 package edu.mills.cs180a;
 
+import static edu.mills.cs180a.RomanNumeral.convertFromString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class RomanNumeralTest {
   private static RomanNumeral rnX;
@@ -24,5 +28,15 @@ class RomanNumeralTest {
     // Integer i = new Integer(10);
     Integer i = Integer.valueOf(10);
     assertNotEquals(rnX, i);
+  }
+
+  // inValid combination data
+  @ParameterizedTest
+  @ValueSource(strings = {"DM", "DD", "LM"})
+
+  void testConvertFromStringExceptionTest_Makie(String strings) {
+    assertThrows(IllegalArgumentException.class, () -> {
+      convertFromString(strings);
+    });
   }
 }
