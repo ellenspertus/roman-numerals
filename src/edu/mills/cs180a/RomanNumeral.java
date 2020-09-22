@@ -24,7 +24,7 @@ public class RomanNumeral {
       Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100, 'D', 500, 'M', 1000);
 
   private static final Map<String, Integer> SUBTRACTIVE_FORMS =
-      Map.of("IV", 4, "IX", 9, "XL", 40, "XC", 90, "CD", 100, "CM", 900);
+      Map.of("IV", 4, "IX", 9, "XL", 40, "XC", 90, "CD", 400, "CM", 900);
 
   private final int value;
   private String text;
@@ -47,7 +47,8 @@ public class RomanNumeral {
 
   /**
    * Constructs a newly-allocated {@code RomanNumeral} object for the specified text. The argument
-   * must be in the range {@link #MIN_VALUE} to {@link #MAX_VALUE}, inclusive.
+   * must be in the range {@link #MIN_VALUE} to {@link #MAX_VALUE}, inclusive. The only subtractive
+   * forms that are accepted are "IV", "IX", "XL", "XC", "CD", and "DM".
    *
    * @param text the Roman Numeral
    * @throws IllegalArgumentException if the argument is out of bounds
@@ -91,8 +92,8 @@ public class RomanNumeral {
     }
 
     int total = 0;
-    String highestSubstringSeen = null; // highest valued symbol or subtractive form
-    int highestValueSeen = 0; // value of highestSubstringSeen
+    String previousSubstring = null;
+    int previousValue = 0;
 
     for (int i = 0; i < s.length(); i++) {
       Integer currentValue = null;
@@ -120,18 +121,17 @@ public class RomanNumeral {
         throw new IllegalArgumentException("Not a valid Roman Numeral: " + currentSubstring);
       }
 
-      // Keep track of highest substring seen, which should always be the first.
-      if (highestSubstringSeen == null) {
-        // Initialize on first iteration.
-        highestSubstringSeen = currentSubstring;
-        highestValueSeen = currentValue;
+      // Make sure current value is not greater than previous value,
+      // which would indicate an invalid input string.
+      if (previousSubstring == null || currentValue <= previousValue) {
+        // Update values.
+        previousSubstring = currentSubstring;
+        previousValue = currentValue;
       } else {
-        // Make sure current substring is no higher than earlier substrings.
-        if (currentValue > highestValueSeen) {
-          throw new IllegalArgumentException(s + " is not a valid Roman Numeral because substring "
-              + currentSubstring + " has a higher value (" + currentValue
-              + ") than earlier substring " + highestSubstringSeen + " (" + highestValueSeen + ")");
-        }
+        // Current value is greater than last value.
+        throw new IllegalArgumentException(s + " is not a valid Roman Numeral because substring "
+            + currentSubstring + " has a higher value (" + currentValue
+            + ") than earlier substring " + previousSubstring + " (" + previousValue + ")");
       }
 
       total += currentValue;

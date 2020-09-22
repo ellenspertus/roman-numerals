@@ -2,9 +2,11 @@ package edu.mills.cs180a;
 
 import static edu.mills.cs180a.RomanNumeral.convertFromInt;
 import static edu.mills.cs180a.RomanNumeral.convertFromString;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -91,7 +93,6 @@ class RomanNumeralTest {
   }
 
   // TODO: This test might not need to exist. Ask other students!
-  @Test
   void convertFromString_ExceptionThrown_AdditiveTooManyIIIII_Benjamin() {
     assertThrows(IllegalArgumentException.class, () -> {
       RomanNumeral.convertFromString("IIIII");
@@ -166,7 +167,6 @@ class RomanNumeralTest {
     assertThrows(IllegalArgumentException.class, () -> RomanNumeral.convertFromString(""));
   }
 
-  @Test
   void convertFromString_ThrowIllegalArguementException_WrongFormat_Charles() {
     assertThrows(IllegalArgumentException.class, () -> RomanNumeral.convertFromString("VIV"));
   }
@@ -190,14 +190,14 @@ class RomanNumeralTest {
   @ParameterizedTest
   @CsvSource({"I,1", "II,2", "III,3", "IV,4", "V,5", "VI,6", "VII,7", "VIII,8", "IX,9", "X,10"})
   void convertFromInt_assertEquals_InttoString1through10_Irene(String RN, String num) {
-    assertEquals(RN.toLowerCase(), convertFromInt(Integer.parseInt(num)));
+    assertEquals(RN, convertFromInt(Integer.parseInt(num)));
   }
 
   // checking that convertFromInt correctly outputs markers
   @ParameterizedTest
   @CsvSource({"I,1", "V,5", "X,10", "L,50", "C,100", "D,500", "M,1000"})
   void convertFromInt_assertEquals_InttoStringMarkers_Irene(String RN, String num) {
-    assertEquals(RN.toLowerCase(), convertFromInt(Integer.parseInt(num)));
+    assertEquals(RN, convertFromInt(Integer.parseInt(num)));
   }
 
   // checking for all numbers comprised of 9s just up to 500
@@ -211,14 +211,14 @@ class RomanNumeralTest {
       "CDIX,409", "CDXIX,419", "CDXXIX,429", "CDXXXIX,439", "CDXLIX,449", "CDLIX,459", "CDLXIX,469",
       "CDLXXIX,479", "CDLXXXIX,489", "CDXCIX,499"})
   void convertFromInt_assertEquals_OneBeforeTens_Irene(String RN, String num) {
-    assertEquals(RN.toLowerCase(), convertFromInt(Integer.parseInt(num)));
+    assertEquals(RN, convertFromInt(Integer.parseInt(num)));
   }
 
   // checking against additives
   @ParameterizedTest
   @CsvSource({"IV,4", "IX,9", "XL,40", "XC,90", "CD,400", "CM,900"})
   void convertFromInt_assertEquals_StandardOverAdditive_Irene(String RN, String num) {
-    assertEquals(RN.toLowerCase(), convertFromInt(Integer.parseInt(num)));
+    assertEquals(RN, convertFromInt(Integer.parseInt(num)));
   }
 
   // checking in 10s
@@ -238,7 +238,7 @@ class RomanNumeralTest {
       "CM,900", "CMX,910", "CMXX,920", "CMXXX,930", "CMXL,940", "CML,950", "CMLX,960", "CMLXX,970",
       "CMLXXX,980", "CMXC,990", "M,1000"})
   void convertFromInt_assertEquals_Tens_Irene(String RN, String num) {
-    assertEquals(RN.toLowerCase(), convertFromInt(Integer.parseInt(num)));
+    assertEquals(RN, convertFromInt(Integer.parseInt(num)));
   }
 
   // checking random numbers
@@ -246,7 +246,7 @@ class RomanNumeralTest {
   @CsvSource({"CDXXIII,423", "CCCLXXIX,379", "CCXXXIV,234", "CDXXV,425", "CMLVI,956", "CCXLI,241",
       "CCCXCVIII,398", "DCCLXVI,766", "XXXVIII,38", "CLXXXVII,187", "XCIII,93", "II,2"})
   void convertFromInt_assertEquals_CorrectNotationForRandInts_Irene(String RN, String num) {
-    assertEquals(RN.toLowerCase(), convertFromInt(Integer.parseInt(num)));
+    assertEquals(RN, convertFromInt(Integer.parseInt(num)));
   }
 
   // checking that convertFromString correctly outputs numbers 1 through 10
@@ -307,9 +307,10 @@ class RomanNumeralTest {
 
   @Test
   void testConvertFromStringExceptionTest_Null_Maki() {
-    assertThrows(IllegalArgumentException.class, () -> {
+    Exception e = assertThrows(Exception.class, () -> {
       convertFromString(null);
     });
+    assertTrue(e instanceof NullPointerException || e instanceof IllegalArgumentException);
   }
 
   // inValid data (inValid alphabet & character)
@@ -324,10 +325,8 @@ class RomanNumeralTest {
   }
 
   // inValid combination data
-  @ParameterizedTest
   @ValueSource(strings = {"DM", "DD", "LM", "LD", "LC", "LL", "XM", "XD", "VM", "VD", "VC", "VL",
       "VX", "VV", "IM", "ID", "IC", "IL"})
-
   void testConvertFromStringExceptionTest_InValidCombination_Maki(String strings) {
     assertThrows(IllegalArgumentException.class, () -> {
       convertFromString(strings);
@@ -439,7 +438,6 @@ class RomanNumeralTest {
    * converts romans to digits NOTE value = {"input, expected" } iv got 4 assertEquals(expected,
    * actualValue)
    */
-  @ParameterizedTest
   @CsvSource(value = {"IV,4", "IL,49", "XIII,13", "CM,900", "ICM,899", "ILM,949", "VDM,495"})
   void convertFromString_IsEquivalent_Omoremi(String roman, String digit) {
     assertEquals(Integer.parseInt(digit), convertFromString(roman));
@@ -466,7 +464,6 @@ class RomanNumeralTest {
   /*
    * converts digit-input to standard roman-expected
    */
-  @ParameterizedTest
   @CsvSource(value = {"5,V", "11,XI", "50,L", "900,CM", "899,ILM", "495,VDM"})
   void convertFromInt_IsStandardRoman_Omoremi(String digit, String roman) {
     assertEquals(roman, convertFromInt(Integer.parseInt(digit)));
@@ -518,5 +515,64 @@ class RomanNumeralTest {
   void convertFromInt_StringOutput_ValidIntInput_Sarah(int input, String expected) {
     String actual = convertFromInt(input);
     assertEquals(expected, actual);
+  }
+
+  @Test
+  void RomanNumeral_ThrowsIllegalArgumentException_StringInputTooHigh_Zoe() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      new RomanNumeral("T");
+    });
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"I"})
+  void RomanNumeral_DoesNotThrowException_StringInputInBounds_Zoe(String string) {
+    assertDoesNotThrow(() -> {
+      new RomanNumeral(string);
+    });
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {RomanNumeral.MIN_VALUE, RomanNumeral.MAX_VALUE})
+  void RomanNumeral_DoesNotThrowException_IntInputInBounds_Zoe(int number) {
+    assertDoesNotThrow(() -> {
+      new RomanNumeral(number);
+    });
+  }
+
+  @Test
+  void getValue_ReturnsCorrectNumericValue_RomanNumeral_Zoe() {
+    assertEquals(new RomanNumeral("V").getValue(), 5);
+    assertEquals(new RomanNumeral(5).getValue(), 5);
+  }
+
+  @Test
+  void toString_ReturnsCorrectStringValue_RomanNumeral_Zoe() {
+    assertEquals(new RomanNumeral(5).toString(), "V");
+    assertEquals(new RomanNumeral("V").toString(), "V");
+  }
+
+  @Test
+  void convertFromInt_ReturnsCorrectIntToStringConversion_ValidIntInput_Zoe() {
+    assertEquals(RomanNumeral.convertFromInt(5), "V");
+  }
+
+  @ParameterizedTest
+  @CsvSource({"5,V", "10,X", "6,VI", "58,LVIII", "101,CI", "842,DCCCXLII"})
+  void convertFromInt_ReturnsCorrectIntToStringConversion_ValidCsvIntInputsLessThan1000_Zoe(
+      int input, String actual) {
+    assertEquals(actual, RomanNumeral.convertFromInt(input));
+  }
+
+  @ParameterizedTest
+  @CsvSource({"1994,MCMXCIV", "3549,MMMDXLIX", "1200,MCC", "2000,MM", "3289,MMMCCLXXXIX"})
+  void convertFromInt_ReturnsCorrectIntToStringConversion_ValidCsvIntInputs1000To4000_Zoe(int input,
+      String actual) {
+    assertEquals(actual, RomanNumeral.convertFromInt(input));
+  }
+
+  @Test
+  void convertFromString_ReturnsCorrectIntValue_ValidStringInput_Zoe() {
+    assertEquals(RomanNumeral.convertFromString("V"), 5);
   }
 }
