@@ -25,4 +25,10 @@ class RomanNumeralTest {
     Integer i = Integer.valueOf(10);
     assertNotEquals(rnX, i);
   }
+
+  @Test
+  public void equals_True_Reflexive() {
+    assertEquals(rnX, rnX);
+  }
+
 }
