@@ -29,23 +29,17 @@ class RomanNumeralTest {
   @Test
   public void equals_True_Symmetric_X_VV() {
     RomanNumeral rnVV = new RomanNumeral("VV");
-    assertEquals(rnX,rnVV);
-    assertEquals(rnVV,rnX);
+    assertEquals(rnX, rnVV);
+    assertEquals(rnVV, rnX);
   }
 
   @Test
   public void equals_True_Transitive_X_VV_VIIIII() {
     RomanNumeral rnVV = new RomanNumeral("VV");
     RomanNumeral rnV5I = new RomanNumeral("VIIIII");
-    assertEquals(rnX,rnVV);
-    assertEquals(rnVV,rnV5I);
-    assertEquals(rnX,rnV5I);
-  }
-
-  @Test
-  public void equals_True_Consistent_X_VIIIII() {
-    RomanNumeral rnV4I = new RomanNumeral("VIIIII");
-    assertEquals(rnX,rnV4I);
+    assertEquals(rnX, rnVV);
+    assertEquals(rnVV, rnV5I);
+    assertEquals(rnX, rnV5I);
   }
 
   //  @Test
