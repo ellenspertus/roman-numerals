@@ -27,9 +27,7 @@ class RomanNumeralTest {
   }
 
   @Test
-  public void equals_False_X100() {
-    // Integer i = new Integer(100);
-    Integer i = Integer.valueOf(100);
-    assertNotEquals(rnX, i);
+  public void equals_False_Reflexivity() {
+    assertEquals(rnX, rnX);
   }
 }
