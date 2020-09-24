@@ -1,5 +1,7 @@
 package edu.mills.cs180a;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +28,27 @@ public class RomanNumeral {
   private static final Map<String, Integer> SUBTRACTIVE_FORMS =
       Map.of("IV", 4, "IX", 9, "XL", 40, "XC", 90, "CD", 400, "CM", 900);
 
+  // Don't covert the same Integer more than once.
+  private static Map<Integer, RomanNumeral> numerals = new HashMap<>();
   private final int value;
   private String text;
+
+  /**
+   * Provides a RomanNumeral with the specified value.
+   *
+   * @param value an integer in the range {@link MIN_VALUE} to {@link MAX_VALUE}
+   * @return a RomanNumeral with the specified value
+   * @throws IllegalArgumentException if value is out of range
+   */
+  public RomanNumeral valueOf(int value) throws IllegalArgumentException {
+    Integer i = Integer.valueOf(value);
+    if (numerals.containsKey(Integer.valueOf(i))) {
+      return numerals.get(i);
+    }
+    RomanNumeral rn = new RomanNumeral(value);
+    numerals.put(i, rn);
+    return rn;
+  }
 
   /**
    * Constructs a newly-allocated {@code RomanNumeral} object that represents the specified value.
@@ -141,6 +162,17 @@ public class RomanNumeral {
     return total;
   }
 
+  private static int applySymbol(int n, StringBuilder sb, String symbol, int value) {
+    while (n >= value) {
+      sb.append(symbol);
+      n -= value;
+    }
+    return n;
+  }
+
+  private static final List<String> SYMBOLS; // sorted from highest to lowest
+  private static final Map<String, Integer> SYMBOLS_TO_VALUES;
+
   /**
    * Returns the Roman Numeral representation of the given number.
    *
@@ -157,17 +189,18 @@ public class RomanNumeral {
     }
 
     StringBuilder sb = new StringBuilder();
-
-    while (n >= 1000) {
-      sb.append("M");
-      n -= 1000;
+    for (String symbol : SYMBOLS) {
+      int symbolValue = SYMBOLS_TO_VALUES.get(symbol);
+      while (n >= symbolValue) {
+        sb.append(symbol);
+        n -= symbolValue;
+      }
     }
-
-    if (n >= 900) {
+    while (n >= 900) {
       sb.append("CM");
       n -= 900;
     }
-    if (n >= 500) {
+    while (n >= 500) {
       sb.append("D");
       n -= 500;
     }
