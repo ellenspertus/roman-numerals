@@ -42,10 +42,4 @@ class RomanNumeralTest {
     assertEquals(rnX, rnV5I);
   }
 
-  //  @Test
-  //  public void equals_False_Null() {
-  //    RomanNumeral rnNull = new RomanNumeral(null);
-  //    assertFalse(rnX,rnNull);
-  //  }
-
 }
