@@ -16,14 +16,14 @@ class RomanNumeralTest {
   }
 
   @Test
-  public void equals_True_XX() {
+  public void equals_True_SameStrings() {
     RomanNumeral rn2 = new RomanNumeral("X");
     assertEquals(rnX, rn2);
     assertEquals(rn2, rnX); // test symmetry
   }
 
   @Test
-  public void equals_False_X10() {
+  public void equals_False_ComparisonToInteger() {
     // Integer i = new Integer(10);
     Integer i = Integer.valueOf(10);
     assertNotEquals(rnX, i);
