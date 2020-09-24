@@ -27,7 +27,7 @@ class RomanNumeralTest {
   }
 
   @Test
-  public void equals_False_Reflexivity() {
+  public void equals_True_Reflexivity() {
     assertEquals(rnX, rnX);
   }
 }
