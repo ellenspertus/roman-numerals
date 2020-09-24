@@ -33,6 +33,7 @@ class RomanNumeralTest {
     assertTrue(rnX.equals(rnX));
   }
 
+  @Test
   public void equals_True_Transitive() {
     RomanNumeral x = new RomanNumeral("IV");
     RomanNumeral y = new RomanNumeral("IV");
@@ -47,13 +48,6 @@ class RomanNumeralTest {
     RomanNumeral y = new RomanNumeral("IV");
 
     assertTrue(x.equals(y) && y.equals(x));
-  }
-
-  @Test
-  public void equals_True_StableOverTime() {
-    RomanNumeral x = new RomanNumeral("X");
-    assertTrue(x.equals(rnX));
-    assertTrue(x.equals(rnX));
   }
 
   @Test
