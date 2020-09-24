@@ -55,6 +55,7 @@ class RomanNumeralTest {
   public void equals_False_Null() {
     RomanNumeral x = new RomanNumeral("IV");
     assertFalse(x.equals(null));
+  }
 
   @Test
   public void equals_True_Self() {
@@ -73,10 +74,5 @@ class RomanNumeralTest {
     assertEquals(rnX, rn2);
     assertEquals(rn2, rn3);
     assertEquals(rnX, rn3);
-  }
-
-  @Test
-  public void equals_True_Reflexive() {
-    assertEquals(rnX, rnX);
   }
 }
