@@ -2,7 +2,6 @@ package edu.mills.cs180a;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -56,9 +55,7 @@ class RomanNumeralTest {
     "DCC, 700",
     "DCCC, 800"
   })
-  void convertFromStringReturnsCorrectInt(String input, int expected) {
-    Integer expectedInteger = Integer.valueOf(expected);
-    Integer actual = Integer.valueOf(RomanNumeral.convertFromString(input));
-    assertTrue(expectedInteger.equals(actual));
+  void equals_True(String input, int expected) {
+    assertEquals(new RomanNumeral(input), new RomanNumeral(expected));
   }
 }
