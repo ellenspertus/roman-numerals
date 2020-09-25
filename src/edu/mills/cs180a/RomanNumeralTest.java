@@ -56,7 +56,7 @@ class RomanNumeralTest {
 
   @Test
   public void equals_False_Nonnullty() {
-    assertEquals(true, rnX.equals(null));
+    assertEquals(false, rnX.equals(null));
   }
 
 }
