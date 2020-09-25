@@ -30,6 +30,11 @@ class RomanNumeralTest {
   }
 
   @Test
+  public void equals_True_X10XX() {
+    RomanNumeral rn10 = new RomanNumeral(10);
+    assertEquals(rn10, rnX);
+
+  @Test
   public void equals_True_Reflexive() {
     assertTrue(rnX.equals(rnX));
   }
