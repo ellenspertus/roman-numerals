@@ -1,5 +1,7 @@
 package edu.mills.cs180a;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +28,30 @@ public class RomanNumeral {
   private static final Map<String, Integer> SUBTRACTIVE_FORMS =
       Map.of("IV", 4, "IX", 9, "XL", 40, "XC", 90, "CD", 400, "CM", 900);
 
+  private static final List<String> SYMBOLS_SORTED_BY_DECREASING_VALUE =
+      List.of("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I");
+
+  // Don't covert the same Integer more than once.
+  private static Map<Integer, RomanNumeral> numerals = new HashMap<>();
   private final int value;
   private String text;
+
+  /**
+   * Provides a RomanNumeral with the specified value.
+   *
+   * @param value an integer in the range {@link MIN_VALUE} to {@link MAX_VALUE}
+   * @return a RomanNumeral with the specified value
+   * @throws IllegalArgumentException if value is out of range
+   */
+  public RomanNumeral valueOf(int value) throws IllegalArgumentException {
+    Integer i = Integer.valueOf(value);
+    if (numerals.containsKey(Integer.valueOf(i))) {
+      return numerals.get(i);
+    }
+    RomanNumeral rn = new RomanNumeral(value);
+    numerals.put(i, rn);
+    return rn;
+  }
 
   /**
    * Constructs a newly-allocated {@code RomanNumeral} object that represents the specified value.
@@ -36,11 +60,7 @@ public class RomanNumeral {
    * @param value the value to be represented
    * @throws IllegalArgumentException if the argument is out of bounds
    */
-  public RomanNumeral(int value) {
-    if (value < MIN_VALUE || value > MAX_VALUE) {
-      throw new IllegalArgumentException(
-          "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
-    }
+  public RomanNumeral(int value) throws IllegalArgumentException {
     this.value = value;
     text = convertFromInt(value);
   }
@@ -53,14 +73,11 @@ public class RomanNumeral {
    * @param text the Roman Numeral
    * @throws IllegalArgumentException if the argument is out of bounds
    */
-  public RomanNumeral(String text) {
+  public RomanNumeral(String text) throws IllegalArgumentException {
     this.text = text;
     value = convertFromString(text);
-    if (value < MIN_VALUE || value > MAX_VALUE) {
-      throw new IllegalArgumentException(
-          "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
-    }
   }
+
 
   /**
    * Returns the numeric value of this {@code RomanNumeral}.
@@ -74,6 +91,11 @@ public class RomanNumeral {
   @Override
   public String toString() {
     return text;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return other instanceof RomanNumeral && value == ((RomanNumeral) other).value;
   }
 
   /**
@@ -143,6 +165,14 @@ public class RomanNumeral {
     return total;
   }
 
+  private static int symbolToValue(String symbol) {
+    if (symbol.length() == 1) {
+      return LETTERS_TO_VALUES.get(symbol.charAt(0));
+    } else {
+      return SUBTRACTIVE_FORMS.get(symbol);
+    }
+  }
+
   /**
    * Returns the Roman Numeral representation of the given number.
    *
@@ -157,61 +187,13 @@ public class RomanNumeral {
       throw new IllegalArgumentException(
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + n);
     }
-
     StringBuilder sb = new StringBuilder();
-
-    while (n >= 1000) {
-      sb.append("M");
-      n -= 1000;
-    }
-
-    if (n >= 900) {
-      sb.append("CM");
-      n -= 900;
-    }
-    if (n >= 500) {
-      sb.append("D");
-      n -= 500;
-    }
-    if (n >= 400) {
-      sb.append("CD");
-      n -= 400;
-    }
-    while (n >= 100) {
-      sb.append("C");
-      n -= 100;
-    }
-    if (n >= 90) {
-      sb.append("XC");
-      n -= 90;
-    }
-    if (n >= 50) {
-      sb.append("L");
-      n -= 50;
-    }
-    if (n >= 40) {
-      sb.append("XL");
-      n -= 40;
-    }
-    while (n >= 10) {
-      sb.append("X");
-      n -= 10;
-    }
-    if (n >= 9) {
-      sb.append("IX");
-      n -= 9;
-    }
-    if (n >= 5) {
-      sb.append("V");
-      n -= 5;
-    }
-    if (n >= 4) {
-      sb.append("IV");
-      n -= 4;
-    }
-    while (n > 0) {
-      sb.append("I");
-      n--;
+    for (String symbol : SYMBOLS_SORTED_BY_DECREASING_VALUE) {
+      int symbolValue = symbolToValue(symbol);
+      while (n >= symbolValue) {
+        sb.append(symbol);
+        n -= symbolValue;
+      }
     }
     return sb.toString();
   }

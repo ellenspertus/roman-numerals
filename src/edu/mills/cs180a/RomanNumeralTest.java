@@ -4,19 +4,28 @@ import static edu.mills.cs180a.RomanNumeral.convertFromInt;
 import static edu.mills.cs180a.RomanNumeral.convertFromString;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class RomanNumeralTest {
+  private static RomanNumeral rnX;
+
+  @BeforeAll
+  public static void setup() {
+    rnX = new RomanNumeral("X");
+  }
+
   @Test
   void convertFromInt_ExceptionThrown_LessThanMin_Benjamin() {
     assertThrows(IllegalArgumentException.class, () -> {
-      RomanNumeral.convertFromInt(RomanNumeral.MIN_VALUE - 1);
+      convertFromInt(RomanNumeral.MIN_VALUE - 1);
     });
   }
 
@@ -128,43 +137,10 @@ class RomanNumeralTest {
   }
 
   @Test
-  public void testconvertFromIntRejectsOutOfBounds_Charles() {
-    assertThrows(IllegalArgumentException.class, () -> RomanNumeral.convertFromInt(10000));
-  }
-
-  @Test
-  public void testRejectNotEqual_Charles() {
-    assertNotEquals(RomanNumeral.convertFromString("V"), RomanNumeral.convertFromString("II"));
-  }
-
-  @Test
-  public void testConvertFromStringAcceptsMDCLXVIEquals1666_Charles() {
-    assertEquals(RomanNumeral.convertFromString("CLXVI"), 166);
-  }
-
-  @Test
-  public void testconvertFromInt1169EqualsMCLXIX_Charles() {
-    assertEquals(RomanNumeral.convertFromInt(1169), "MCLXIX");
-  }
-
-  @Test
-  public void testconvertFromInt500EqualsD_Charles() {
-    assertEquals(RomanNumeral.convertFromInt(500), "D");
-  }
-
-  @Test
-  public void testConvertFromStringAcceptsEquals10_Charles() {
-    assertEquals(RomanNumeral.convertFromString("X"), 10);
-  }
-
-  @Test
-  public void testconvertFromIntRejectsNotEqual_Charles() {
-    assertNotEquals(RomanNumeral.convertFromInt(5), RomanNumeral.convertFromInt(2));
-  }
-
-  @Test
-  void convertFromString_ThrowIllegalArguementException_EmptyString_Charles() {
-    assertThrows(IllegalArgumentException.class, () -> RomanNumeral.convertFromString(""));
+  public void equals_True_SameStrings() {
+    RomanNumeral rn2 = new RomanNumeral("X");
+    assertEquals(rnX, rn2);
+    assertEquals(rn2, rnX); // test symmetry
   }
 
   void convertFromString_ThrowIllegalArguementException_WrongFormat_Charles() {
@@ -554,25 +530,74 @@ class RomanNumeralTest {
 
   @Test
   void convertFromInt_ReturnsCorrectIntToStringConversion_ValidIntInput_Zoe() {
-    assertEquals(RomanNumeral.convertFromInt(5), "V");
+    assertEquals("V", convertFromInt(5));
   }
 
   @ParameterizedTest
   @CsvSource({"5,V", "10,X", "6,VI", "58,LVIII", "101,CI", "842,DCCCXLII"})
   void convertFromInt_ReturnsCorrectIntToStringConversion_ValidCsvIntInputsLessThan1000_Zoe(
       int input, String actual) {
-    assertEquals(actual, RomanNumeral.convertFromInt(input));
+    assertEquals(actual, convertFromInt(input));
   }
 
   @ParameterizedTest
   @CsvSource({"1994,MCMXCIV", "3549,MMMDXLIX", "1200,MCC", "2000,MM", "3289,MMMCCLXXXIX"})
   void convertFromInt_ReturnsCorrectIntToStringConversion_ValidCsvIntInputs1000To4000_Zoe(int input,
       String actual) {
-    assertEquals(actual, RomanNumeral.convertFromInt(input));
+    assertEquals(actual, convertFromInt(input));
   }
 
   @Test
-  void convertFromString_ReturnsCorrectIntValue_ValidStringInput_Zoe() {
-    assertEquals(RomanNumeral.convertFromString("V"), 5);
+  public void equals_False_ComparisonToInteger() {
+    // Integer i = new Integer(10);
+    Integer i = Integer.valueOf(10);
+    assertNotEquals(rnX, i);
+  }
+
+  @Test
+  public void equals_True_Reflexive() {
+    assertTrue(rnX.equals(rnX));
+  }
+
+  @Test
+  public void equals_True_Transitive() {
+    RomanNumeral x = new RomanNumeral("IV");
+    RomanNumeral y = new RomanNumeral("IV");
+    RomanNumeral z = new RomanNumeral("IV");
+
+    assertTrue(x.equals(y) && y.equals(z) && x.equals(z));
+  }
+
+  @Test
+  public void equals_True_Symmetric() {
+    RomanNumeral x = new RomanNumeral("IV");
+    RomanNumeral y = new RomanNumeral("IV");
+
+    assertTrue(x.equals(y) && y.equals(x));
+  }
+
+  @Test
+  public void equals_False_Null() {
+    RomanNumeral x = new RomanNumeral("IV");
+    assertFalse(x.equals(null));
+  }
+
+  @Test
+  public void equals_True_Self() {
+    assertEquals(rnX, rnX);
+  }
+
+  @Test
+  public void equals_False_null() {
+    assertNotEquals(rnX, null);
+  }
+
+  @Test
+  public void equals_True_TransitiveXXX() {
+    RomanNumeral rn2 = new RomanNumeral("X");
+    RomanNumeral rn3 = new RomanNumeral("X");
+    assertEquals(rnX, rn2);
+    assertEquals(rn2, rn3);
+    assertEquals(rnX, rn3);
   }
 }
