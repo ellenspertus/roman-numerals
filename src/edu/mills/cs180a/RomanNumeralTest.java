@@ -30,4 +30,33 @@ class RomanNumeralTest {
   public void equals_True_Reflexivity() {
     assertEquals(rnX, rnX);
   }
+
+  @Test
+  public void equals_True_Symmetric() {
+    RomanNumeral rn2 = new RomanNumeral("X");
+    assertEquals(rnX.equals(rn2), rn2.equals(rnX));
+  }
+
+
+  @Test
+  public void equals_True_Transitive() {
+    RomanNumeral rn2 = new RomanNumeral("X");
+    RomanNumeral rn3 = new RomanNumeral("X");
+
+    assertEquals(rnX.equals(rn2) && rn2.equals(rn3), rnX.equals(rn3));
+  }
+
+  @Test
+  public void equals_True_Consistent() {
+    RomanNumeral rn2 = new RomanNumeral("X");
+    assertEquals(rnX, rn2);
+    rnX = new RomanNumeral("X");
+    assertEquals(rnX, rn2);
+  }
+
+  @Test
+  public void equals_False_Nonnullty() {
+    assertEquals(true, rnX.equals(null));
+  }
+
 }
