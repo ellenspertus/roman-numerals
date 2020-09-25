@@ -28,6 +28,9 @@ public class RomanNumeral {
   private static final Map<String, Integer> SUBTRACTIVE_FORMS =
       Map.of("IV", 4, "IX", 9, "XL", 40, "XC", 90, "CD", 400, "CM", 900);
 
+  private static final List<String> SYMBOLS_SORTED_BY_VALUE =
+      List.of("I", "IV", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M");
+
   // Don't covert the same Integer more than once.
   private static Map<Integer, RomanNumeral> numerals = new HashMap<>();
   private final int value;
@@ -162,16 +165,13 @@ public class RomanNumeral {
     return total;
   }
 
-  private static int applySymbol(int n, StringBuilder sb, String symbol, int value) {
-    while (n >= value) {
-      sb.append(symbol);
-      n -= value;
+  private static int symbolToValue(String symbol) {
+    if (symbol.length() == 1) {
+      return LETTERS_TO_VALUES.get(symbol.charAt(0));
+    } else {
+      return SUBTRACTIVE_FORMS.get(symbol);
     }
-    return n;
   }
-
-  private static final List<String> SYMBOLS; // sorted from highest to lowest
-  private static final Map<String, Integer> SYMBOLS_TO_VALUES;
 
   /**
    * Returns the Roman Numeral representation of the given number.
@@ -187,62 +187,13 @@ public class RomanNumeral {
       throw new IllegalArgumentException(
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + n);
     }
-
     StringBuilder sb = new StringBuilder();
-    for (String symbol : SYMBOLS) {
-      int symbolValue = SYMBOLS_TO_VALUES.get(symbol);
+    for (String symbol : SYMBOLS_SORTED_BY_VALUE) {
+      int symbolValue = symbolToValue(symbol);
       while (n >= symbolValue) {
         sb.append(symbol);
         n -= symbolValue;
       }
-    }
-    while (n >= 900) {
-      sb.append("CM");
-      n -= 900;
-    }
-    while (n >= 500) {
-      sb.append("D");
-      n -= 500;
-    }
-    if (n >= 400) {
-      sb.append("CD");
-      n -= 400;
-    }
-    while (n >= 100) {
-      sb.append("C");
-      n -= 100;
-    }
-    if (n >= 90) {
-      sb.append("XC");
-      n -= 90;
-    }
-    if (n >= 50) {
-      sb.append("L");
-      n -= 50;
-    }
-    if (n >= 40) {
-      sb.append("XL");
-      n -= 40;
-    }
-    while (n >= 10) {
-      sb.append("X");
-      n -= 10;
-    }
-    if (n >= 9) {
-      sb.append("IX");
-      n -= 9;
-    }
-    if (n >= 5) {
-      sb.append("V");
-      n -= 5;
-    }
-    if (n >= 4) {
-      sb.append("IV");
-      n -= 4;
-    }
-    while (n > 0) {
-      sb.append("I");
-      n--;
     }
     return sb.toString();
   }
