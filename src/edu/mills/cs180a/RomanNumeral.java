@@ -136,7 +136,6 @@ public class RomanNumeral {
         currentSubstring = Character.toString(currentChar);
       }
 
-
       // If we couldn't find its value, the character was illegal.
       if (currentValue == null) {
         throw new IllegalArgumentException("Not a valid Roman Numeral: " + currentSubstring);
