@@ -21,8 +21,7 @@ public class RomanNumeral {
    */
   public static final int MAX_VALUE = 9999;
 
-  @VisibleForTesting
-  protected static final Map<Character, Integer> LETTERS_TO_VALUES =
+  private static final Map<Character, Integer> LETTERS_TO_VALUES =
       Map.of('I', 1, 'V', 5, 'X', 10, 'L', 50, 'C', 100, 'D', 500, 'M', 1000);
 
   private static final Map<String, Integer> SUBTRACTIVE_FORMS =
@@ -33,6 +32,7 @@ public class RomanNumeral {
 
   // Don't covert the same Integer more than once.
   private static Map<Integer, RomanNumeral> numerals = new HashMap<>();
+
   private final int value;
   private String text;
 
@@ -77,7 +77,6 @@ public class RomanNumeral {
     this.text = text;
     value = convertFromString(text);
   }
-
 
   /**
    * Returns the numeric value of this {@code RomanNumeral}.
