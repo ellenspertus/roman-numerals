@@ -28,8 +28,8 @@ public class RomanNumeral {
   private static final Map<String, Integer> SUBTRACTIVE_FORMS =
       Map.of("IV", 4, "IX", 9, "XL", 40, "XC", 90, "CD", 400, "CM", 900);
 
-  private static final List<String> SYMBOLS_SORTED_BY_VALUE =
-      List.of("I", "IV", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M");
+  private static final List<String> SYMBOLS_SORTED_BY_DECREASING_VALUE =
+      List.of("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I");
 
   // Don't covert the same Integer more than once.
   private static Map<Integer, RomanNumeral> numerals = new HashMap<>();
@@ -188,7 +188,7 @@ public class RomanNumeral {
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + n);
     }
     StringBuilder sb = new StringBuilder();
-    for (String symbol : SYMBOLS_SORTED_BY_VALUE) {
+    for (String symbol : SYMBOLS_SORTED_BY_DECREASING_VALUE) {
       int symbolValue = symbolToValue(symbol);
       while (n >= symbolValue) {
         sb.append(symbol);

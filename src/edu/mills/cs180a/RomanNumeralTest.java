@@ -528,7 +528,7 @@ class RomanNumeralTest {
 
   @Test
   void convertFromInt_ReturnsCorrectIntToStringConversion_ValidIntInput_Zoe() {
-    assertEquals(convertFromInt(5), "V");
+    assertEquals("V", convertFromInt(5));
   }
 
   @ParameterizedTest
