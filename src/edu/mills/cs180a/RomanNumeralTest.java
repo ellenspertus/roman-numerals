@@ -1,5 +1,7 @@
 package edu.mills.cs180a;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,7 +30,7 @@ class RomanNumeralTest {
 
   @Test
   public void equals_True_Reflexivity() {
-    assertEquals(rnX, rnX);
+    assertTrue(rnX.equals(rnX));
   }
 
   @Test
@@ -37,26 +39,16 @@ class RomanNumeralTest {
     assertEquals(rnX.equals(rn2), rn2.equals(rnX));
   }
 
-
   @Test
   public void equals_True_Transitive() {
     RomanNumeral rn2 = new RomanNumeral("X");
     RomanNumeral rn3 = new RomanNumeral("X");
 
-    assertEquals(rnX.equals(rn2) && rn2.equals(rn3), rnX.equals(rn3));
+    assertEquals(rnX.equals(rn3), rnX.equals(rn2) && rn2.equals(rn3));
   }
 
   @Test
-  public void equals_True_Consistent() {
-    RomanNumeral rn2 = new RomanNumeral("X");
-    assertEquals(rnX, rn2);
-    rnX = new RomanNumeral("X");
-    assertEquals(rnX, rn2);
+  public void equals_False_Nonnullity() {
+    assertFalse(rnX.equals(null));
   }
-
-  @Test
-  public void equals_False_Nonnullty() {
-    assertEquals(false, rnX.equals(null));
-  }
-
 }
