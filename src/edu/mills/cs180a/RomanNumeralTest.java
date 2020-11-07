@@ -1,11 +1,15 @@
 package edu.mills.cs180a;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class RomanNumeralTest {
   private static RomanNumeral rnX;
@@ -14,6 +18,53 @@ class RomanNumeralTest {
   public static void setup() {
     rnX = new RomanNumeral("X");
   }
+
+  // Start of my tests.
+  @Test
+  void convertFromString_ThrowsIllegalArgumentException_InputExceedsHighBound() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      RomanNumeral.convertFromString("MMMMMMMMMMMM");
+    });
+  }
+
+  @Test
+  void convertFromString_DoesNotThrowIllegalArgumentException_InputValid() {
+    assertDoesNotThrow(() -> {
+      RomanNumeral.convertFromString("X");
+    });
+  }
+
+  @Test
+  void convertFromString_ThrowsIllegalArgumentException_InputInvalid() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      RomanNumeral.convertFromString("Z");
+    });
+  }
+
+  // Null case throws null pointer exception.
+  @Test
+  void convertFromString_ThrowsIllegalArgumentException_InputNull() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      RomanNumeral.convertFromString(null);
+    });
+  }
+
+  @Test
+  void convertFromString_ThrowsIllegalArgumentException_InputEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> {
+      RomanNumeral.convertFromString("");
+    });
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"I", "MMMMMMMMMCMXCIX"}) // 1, 9999
+  void convertFromString_DoesNotThrowException_InputValid(String string) {
+    assertDoesNotThrow(() -> {
+      RomanNumeral.convertFromString(string);
+    });
+  }
+
+  // Start of pre-existing tests.
 
   @Test
   public void equals_True_SameStrings() {
