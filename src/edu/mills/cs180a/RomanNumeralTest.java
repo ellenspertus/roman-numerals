@@ -8,7 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class RomanNumeralTests {
+class RomanNumeralTest {
 
     @ParameterizedTest
 	@CsvSource( {"I, 1", "V , 5", "X , 10", "L , 50", "C , 100", "D, 500", "M , 1000"} )
@@ -116,7 +116,7 @@ class RomanNumeralTests {
 	}
 	
 	@ParameterizedTest
-	@CsvSource({"iv, 4", "IV,4", "IX,9", "XL,40", "XC,90", "CD,400", "CM,900"})
+	@CsvSource({"CD,400", "iv, 4", "IV,4", "IX,9", "XL,40", "XC,90", "CM,900"})
 	void testStringToIntSubtractivePrinciple(String subtractiveNumeral, int expected) {
 		int actual = convertFromStringToInt(subtractiveNumeral);
 		assertEquals(expected, actual);
