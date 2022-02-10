@@ -42,7 +42,7 @@ public class RomanNumeral {
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
     }
     this.value = value;
-    text = convertFromInt(value);
+    text = convertFromIntToString(value);
   }
 
   /**
@@ -54,7 +54,7 @@ public class RomanNumeral {
    */
   public RomanNumeral(String text) {
     this.text = text;
-    value = convertFromString(text);
+    value = convertFromStringToInt(text);
     if (value < MIN_VALUE || value > MAX_VALUE) {
       throw new IllegalArgumentException(
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
@@ -84,7 +84,7 @@ public class RomanNumeral {
    *         of range
    */
   @VisibleForTesting
-  protected static int convertFromString(String s) {
+  protected static int convertFromStringToInt(String s) {
     s = s.toUpperCase();
     if (s.isEmpty()) {
       throw new IllegalArgumentException("The empty string is not a valid Roman Numeral");
@@ -152,7 +152,7 @@ public class RomanNumeral {
    *         given range
    */
   @VisibleForTesting
-  protected static String convertFromInt(int n) throws IllegalArgumentException {
+  protected static String convertFromIntToString(int n) throws IllegalArgumentException {
     if (n > MAX_VALUE || n < MIN_VALUE) {
       throw new IllegalArgumentException(
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + n);
