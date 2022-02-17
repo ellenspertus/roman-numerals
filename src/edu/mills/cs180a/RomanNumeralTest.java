@@ -95,13 +95,6 @@ class RomanNumeralTest {
 	}
 	
 	@ParameterizedTest
-	@ValueSource(strings = {"DCCCC", "IIII", "VIIII", "XXXX"})
-	void testThrowsExceptionForNonStandardForm(String s) {
-		assertThrows(IllegalArgumentException.class,
-				() -> convertFromStringToInt(s));
-	}
-	
-	@ParameterizedTest
 	@ValueSource(ints = {-1, 0, 10000})
 	void testOutOfBoundsNumbers(int num) {
 		assertThrows(IllegalArgumentException.class,
