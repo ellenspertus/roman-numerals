@@ -53,12 +53,12 @@ public class RomanNumeral {
    * @throws IllegalArgumentException if the argument is out of bounds
    */
   public RomanNumeral(String text) {
-    this.text = text;
     value = convertFromStringToInt(text);
     if (value < MIN_VALUE || value > MAX_VALUE) {
       throw new IllegalArgumentException(
           "Value out of bounds [" + MIN_VALUE + "..." + MAX_VALUE + "]: " + value);
     }
+    this.text = convertFromIntToString(value);
   }
 
   /**
@@ -73,6 +73,15 @@ public class RomanNumeral {
   @Override
   public String toString() {
     return text;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+      if (other instanceof RomanNumeral) {
+          RomanNumeral rn = (RomanNumeral) other;
+          return this.value == rn.value;
+      }
+      return false;
   }
 
   /**
