@@ -3,6 +3,8 @@ package edu.mills.cs180a;
 import static edu.mills.cs180a.RomanNumeral.convertFromIntToString;
 import static edu.mills.cs180a.RomanNumeral.convertFromStringToInt;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -10,6 +12,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class RomanNumeralTest {
 
+    @Test
+    void testHashCode() {
+        RomanNumeral rn1 = new RomanNumeral(1);
+        RomanNumeral rn2 = new RomanNumeral(1);
+        assertEquals(rn1.hashCode(), rn2.hashCode());
+ 
+//        Set<RomanNumeral> myNumerals = new HashSet<>();
+//        myNumerals.add(rn1);
+//        myNumerals.add(rn2);
+//        assertEquals(1, myNumerals.size());
+    }
+    
+    
+ 
     @ParameterizedTest
     @CsvSource( {"I, 1", "V , 5", "X , 10", "L , 50", "C , 100", "D, 500", "M , 1000"} )
     void testEqualityConvertFromStringToInt(String input, int expected) {

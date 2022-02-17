@@ -83,6 +83,11 @@ public class RomanNumeral {
       }
       return false;
   }
+  
+  @Override
+  public int hashCode() {
+      return text.hashCode();
+  }
 
   /**
    * Returns the number corresponding to the given string representing a Roman Numeral.
