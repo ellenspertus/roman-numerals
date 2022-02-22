@@ -2,41 +2,33 @@ package edu.mills.cs180a;
 
 import static edu.mills.cs180a.RomanNumeral.convertFromIntToString;
 import static edu.mills.cs180a.RomanNumeral.convertFromStringToInt;
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.HashSet;
-import java.util.Set;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
 
 class RomanNumeralTest {
 
     @Test
     void testHashCode() {
-        RomanNumeral rn1 = new RomanNumeral(1);
-        RomanNumeral rn2 = new RomanNumeral(1);
+        RomanNumeral rn1 = RomanNumeral.createFromValue(1);
+        RomanNumeral rn2 = RomanNumeral.createFromValue(1);
         assertEquals(rn1.hashCode(), rn2.hashCode());
- 
-//        Set<RomanNumeral> myNumerals = new HashSet<>();
-//        myNumerals.add(rn1);
-//        myNumerals.add(rn2);
-//        assertEquals(1, myNumerals.size());
     }
-    
-    
- 
+
     @ParameterizedTest
-    @CsvSource( {"I, 1", "V , 5", "X , 10", "L , 50", "C , 100", "D, 500", "M , 1000"} )
+    @CsvSource({"I, 1", "V , 5", "X , 10", "L , 50", "C , 100", "D, 500", "M , 1000"})
     void testEqualityConvertFromStringToInt(String input, int expected) {
         int actual = convertFromStringToInt(input);
         assertEquals(expected, actual);
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, -1, -2, -4}) 
+    @ValueSource(ints = {0, -1, -2, -4})
     void testIllegalArgumentForConvertIntToString(int n) {
-        assertThrows(IllegalArgumentException.class, () -> convertFromIntToString(n));	
+        assertThrows(IllegalArgumentException.class, () -> convertFromIntToString(n));
     }
 
     @ParameterizedTest
@@ -49,30 +41,31 @@ class RomanNumeralTest {
     @ParameterizedTest
     @ValueSource(strings = {" ", "U", "$"})
     void testConvertFromStringToIntThrowsExceptionForInvalidEntry(String s) {
-        assertThrows(IllegalArgumentException.class,
-                () -> convertFromStringToInt(s));
+        assertThrows(IllegalArgumentException.class, () -> convertFromStringToInt(s));
     }
 
     @ParameterizedTest
-    @CsvSource({"L,50","XCIV,94","D,500","X,10", "IV,4", "CD,400", "v,5", "xl,40", "CCCXCVIII,398", "MMMMMMMMM,9000","MMMMMMMMMCMXCIX,9999"})
+    @CsvSource({"L,50", "XCIV,94", "D,500", "X,10", "IV,4", "CD,400", "v,5", "xl,40",
+            "CCCXCVIII,398", "MMMMMMMMM,9000", "MMMMMMMMMCMXCIX,9999"})
     void convertFromStringToIntShouldGenerateTheExpectedIntValue(String input, int expected) {
         int actualValue = convertFromStringToInt(input);
         assertEquals(expected, actualValue);
     }
 
     @ParameterizedTest
-    @CsvSource({"50,L","94,XCIV","100,C", "9,IX", "40,XL", "1,I", "324,CCCXXIV", "9000,MMMMMMMMM", "9999,MMMMMMMMMCMXCIX","500,D"})
+    @CsvSource({"50,L", "94,XCIV", "100,C", "9,IX", "40,XL", "1,I", "324,CCCXXIV", "9000,MMMMMMMMM",
+            "9999,MMMMMMMMMCMXCIX", "500,D"})
     void convertFromIntToStringShouldGenerateTheExpectedStringValue(int input, String expected) {
         String actualValue = convertFromIntToString(input);
         assertEquals(expected, actualValue);
     }
 
-    //String to int tests
+    // String to int tests
     @ParameterizedTest
     @ValueSource(ints = {-100, 0, 10000})
     void testIntInputIsOutOfBounds(int invalidInt) {
         assertThrows(IllegalArgumentException.class,
-                () -> new RomanNumeral(invalidInt));
+                () -> RomanNumeral.createFromValue(invalidInt));
     }
 
     // Testing for convertFromStringToInt
@@ -93,28 +86,24 @@ class RomanNumeralTest {
     @ParameterizedTest
     @ValueSource(strings = {"@", "V!", "123", "ten"})
     void testStringToIntInvalidRomanNumeral(String invalidInput) {
-        assertThrows(IllegalArgumentException.class,
-                () -> convertFromStringToInt(invalidInput));
+        assertThrows(IllegalArgumentException.class, () -> convertFromStringToInt(invalidInput));
     }
 
-    //	@ParameterizedTest
+    // @ParameterizedTest
     @ValueSource(strings = {"IIII", "VIIII", "xxxx", "CMXCIX", "IM"})
     void testStringToIntNonStandardRomanNumeral(String invalidInput) {
-        assertThrows(IllegalArgumentException.class,
-                () -> convertFromStringToInt(invalidInput));
+        assertThrows(IllegalArgumentException.class, () -> convertFromStringToInt(invalidInput));
     }
 
     @ValueSource(ints = {0, -1, 10000})
     void testConvertFromIntToStringThrowsExceptionForOutOfRange(int n) {
-        assertThrows(IllegalArgumentException.class,
-                () -> convertFromIntToString(n));
+        assertThrows(IllegalArgumentException.class, () -> convertFromIntToString(n));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 0, 10000})
     void testOutOfBoundsNumbers(int num) {
-        assertThrows(IllegalArgumentException.class,
-                () -> convertFromIntToString(num));
+        assertThrows(IllegalArgumentException.class, () -> convertFromIntToString(num));
     }
 
     @ParameterizedTest
@@ -180,25 +169,24 @@ class RomanNumeralTest {
     void ParamIntToString(int input, String expected) {
         assertEquals(expected, convertFromIntToString(input));
     }
-    
+
     @ParameterizedTest
     @CsvSource({"iiii,iv", "i,I", "i,i", "v,V", "iiii,IV"})
     void testConstructorStandardization(String s1, String s2) {
-        RomanNumeral rn1 = new RomanNumeral(s1);
-        RomanNumeral rn2 = new RomanNumeral(s2);
+        RomanNumeral rn1 = RomanNumeral.createFromString(s1);
+        RomanNumeral rn2 = RomanNumeral.createFromString(s2);
         assertEquals(rn1, rn2);
     }
 
     @Test
-    void testEqualsNull() {  
-        assertNotEquals(new RomanNumeral(1), null);
+    void testEqualsNull() {
+        assertNotEquals(RomanNumeral.createFromValue(1), null);
     }
-    
+
     @ParameterizedTest
     @CsvSource({"v,x"})
     void testNotEqual(String s1, String s2) {
-        assertNotEquals(new RomanNumeral(s1),
-                new RomanNumeral(s2));
+        assertNotEquals(RomanNumeral.createFromString(s1), RomanNumeral.createFromString(s2));
     }
 }
 
